@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS cantina;
+USE cantina;
+CREATE TABLE IF NOT EXISTS funcionario (
+    id INT(8) AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(256) UNIQUE,
+    senha VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id)
+);
