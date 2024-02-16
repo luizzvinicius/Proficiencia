@@ -69,14 +69,14 @@ public class Entrada implements AutoCloseable {
         }
     }
 
-    public int lerOption(String msg, int min, int max, String erroMessage) {
+    public int lerOption(String msg, int min, int max, String errorMessage) {
         while (true) {
             var num = this.lerInt(msg);
             try {
                 if (num < min || num > max) {
-                    throw new IllegalArgumentException(erroMessage + "\n");
+                    throw new IllegalArgumentException(errorMessage + "\n");
                 }
-                return num;
+                return num - 1;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }

@@ -10,27 +10,33 @@ public class Main {
 
     public static void main(String[] args) {
         var listaOpcoes = new String[] {
+                "Cadastra", "Ler", "Sair"
         };
-        var methods = new methods[] {
+        methods[] methods = new methods[] {
+                Main::outro, Main::outro, Main::outro
         };
 
         try (var conn = ConnectionFactory.getConnection(); var scan = new Entrada()) {
-            for (int i = 0; i < listaOpcoes.length; i++) {
-                System.out.printf("[ %d ] %s%n", i + 1, listaOpcoes[i]);
-            }
-
             var opt = 0;
-            while (opt != listaOpcoes.length - 1) {
-                opt = scan.lerOption("Opção: ", 1, listaOpcoes.length, "Opção inválida") - 1;
+            var size = listaOpcoes.length;
+            while (opt != size - 1) {
+                for (var i = 0; i < size; i++) {
+                    System.out.printf("[ %d ] %s%n", i + 1, listaOpcoes[i]);
+                }
+                opt = scan.lerOption("Opção: ", 1, size, "Opção inválida");
                 methods[opt].accept(conn, scan);
             }
-        } catch (SQLException e) {
-            System.out.println("Conexão vazia: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.printf("Conexão vazia: %s%n", e.getMessage());
         }
     }
 
     @FunctionalInterface
     public interface methods {
         void accept(Connection conn, Entrada scan);
+    }
+
+    public static void outro(Connection conn, Entrada scan) {
+        System.out.println("Método");
     }
 }
